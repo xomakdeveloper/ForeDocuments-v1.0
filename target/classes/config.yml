@@ -1,0 +1,52 @@
+#███████╗ ██████╗ ██████╗ ███████╗  ██████╗  ██████╗  ██████╗██╗   ██╗███╗   ███╗███████╗███╗   ██╗████████╗███████╗
+#██╔════╝██╔═══██╗██╔══██╗██╔════╝  ██╔══██╗██╔═══██╗██╔════╝██║   ██║████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔════╝
+#█████╗  ██║   ██║██████╔╝█████╗    ██║  ██║██║   ██║██║     ██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████╗
+#██╔══╝  ██║   ██║██╔══██╗██╔══╝    ██║  ██║██║   ██║██║     ██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ╚════██║
+#██║     ╚██████╔╝██║  ██║███████╗  ██████╔╝╚██████╔╝╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ███████║
+#╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝
+#[~] Created by xomakdev.exe ( xomakdeveloper ) with love!
+
+# Copyright (c) 2025 XomakDeveloper.
+#
+# This software is released under the AGPLv3 License with an additional non-commercial clause.
+# You are free to use, modify, and distribute it as long as it is not for commercial purposes.
+#
+# See the LICENSE file for more details on the AGPLv3 and the additional clause.
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+# Авторские права (c) 2025 XomakDeveloper.
+#
+# Это программное обеспечение распространяется под лицензией AGPLv3 с дополнительным условием о запрете коммерческого использования.
+# Вы можете свободно использовать, изменять и распространять его, при условии, что это не будет происходить в коммерческих целях.
+#
+# Подробнее читайте в файле LICENSE об условиях AGPLv3 и дополнительном условии.
+
+prefix: "&f- &2FORE-DOCUMENTS &f-"
+document_not_found: "%PREFIX% Документ не найден в конфиге"
+placeholder_not_found: "%PREFIX% &cДокумент &o&n%DOCUMENT%&r &cне найден в конфигруации!"
+player_not_found: "%PREFIX% &cИгрок не найден!"
+
+withdrawn_document: "&cизъят"
+give_document: "&aвыдан"
+
+reload_with_updatedata: false #перезагрузка конфигурации с логикой updatedata, дефолт значение - false
+
+document_message: "%PREFIX% &fДокумент &b%DOCUMENT% &r%STATUS% &fу игрока &2%PLAYER%"
+updatedata_message: "%PREFIX% &aДанные обновлены!"
+reload_message: "%PREFIX% &aКонфигурация успешно перезагружена."
+
+usage_cmd_length: "%PREFIX% &fИспользование: /foredocuments &f<&egive&f/&etake&f> <&eдокумент&f> <&eигрок&f>"
+usage_cmd: "%PREFIX% &fИспользование: /foredocuments &f<&egive&f/&etake&f/&eupdatedata&f/&ereload&f> [&eдокумент&f] [&eигрок&f]"
+
+documents:
+#  example_document:
+#    placeholder: "%foredocuments_example_document%"
+#    value_if_has: "&aИмеется"
+#    value_if_missing: "&cОтсутствует"
+#    give_execute: "lp user {player} permission set has_example_document"
+#    take_execute: "lp user {player} permission unset has_example_document"
+  license:
+    placeholder: "%foredocuments_license%"
+    value_if_has: "&aИмеется"
+    value_if_missing: "&cОтсутствует"
+    give_execute: "lp user {player} permission set has_license" # команда выдача пермишена в luckperms для удобного определения есть ли документ у игрока для других плагинов
+    take_execute: "lp user {player} permission unset has_license" # команда изъятия пермишена в luckperms для удобного определения есть ли документ у игрока для других плагинов

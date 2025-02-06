@@ -1,0 +1,20 @@
+name: ForeDocuments
+version: '1.0'
+main: org.xomakdev.foredocuments.ForeDocuments
+api-version: '1.16'
+prefix: FOREDOCUMENTS
+load: STARTUP
+depend: [PlaceholderAPI]
+authors: [xomakdev.exe]
+description: Universal custom documents plugin for roleplay servers by xomakdev.exe
+website: https://t.me/xomakdev
+commands:
+  foredocuments:
+    description: Управление документами.
+    usage: /foredocuments <give/take/updatedata/reload> [документ] [игрок]
+    aliases: [fd]
+    permission: foredocument.use-admin
+permissions:
+  foredocument.use-admin:
+    description: "Позволяет использовать команду /foredocuments"
+    default: op
