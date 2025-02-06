@@ -6,20 +6,6 @@
 #╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝
 #[~] Created by xomakdev.exe ( xomakdeveloper ) with love!
 
-# Copyright (c) 2025 XomakDeveloper.
-#
-# This software is released under the AGPLv3 License with an additional non-commercial clause.
-# You are free to use, modify, and distribute it as long as it is not for commercial purposes.
-#
-# See the LICENSE file for more details on the AGPLv3 and the additional clause.
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
-# Авторские права (c) 2025 XomakDeveloper.
-#
-# Это программное обеспечение распространяется под лицензией AGPLv3 с дополнительным условием о запрете коммерческого использования.
-# Вы можете свободно использовать, изменять и распространять его, при условии, что это не будет происходить в коммерческих целях.
-#
-# Подробнее читайте в файле LICENSE об условиях AGPLv3 и дополнительном условии.
-
 prefix: "&f- &2FORE-DOCUMENTS &f-"
 document_not_found: "%PREFIX% Документ не найден в конфиге"
 placeholder_not_found: "%PREFIX% &cДокумент &o&n%DOCUMENT%&r &cне найден в конфигруации!"
@@ -50,3 +36,18 @@ documents:
     value_if_missing: "&cОтсутствует"
     give_execute: "lp user {player} permission set has_license" # команда выдача пермишена в luckperms для удобного определения есть ли документ у игрока для других плагинов
     take_execute: "lp user {player} permission unset has_license" # команда изъятия пермишена в luckperms для удобного определения есть ли документ у игрока для других плагинов
+
+
+# Copyright (c) 2025 XomakDeveloper.
+#
+# This software is released under the AGPLv3 License with an additional non-commercial clause.
+# You are free to use, modify, and distribute it as long as it is not for commercial purposes.
+#
+# See the LICENSE (https://github.com/xomakdeveloper/ForeDocuments-v1.0/blob/main/LICENSE) file for more details on the AGPLv3 and the additional clause.
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
+# Авторские права (c) 2025 XomakDeveloper.
+#
+# Это программное обеспечение распространяется под лицензией AGPLv3 с дополнительным условием о запрете коммерческого использования.
+# Вы можете свободно использовать, изменять и распространять его, при условии, что это не будет происходить в коммерческих целях.
+#
+# Подробнее читайте в файле LICENSE (https://github.com/xomakdeveloper/ForeDocuments-v1.0/blob/main/LICENSE) об условиях AGPLv3 и дополнительном условии.

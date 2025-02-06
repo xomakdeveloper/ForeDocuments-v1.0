@@ -37,77 +37,79 @@ public class ForeDocumentsCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        String prefix = plugin.getInstance().getConfig().getString("prefix");
         if (!(sender instanceof Player) || sender.hasPermission("foredocument.use-admin")) {
             if (args.length < 1) {
-                sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("usage_cmd", "%PREFIX% &fИспользование: /foredocuments <&egive&f/&etake&f/&eupdatedata&f> [&eдокумент&f] [&eигрок&f]")
-                        .replace("%PREFIX%", plugin.getInstance().getConfig().getString("prefix"))));
+                sender.sendMessage(cr.color(this.plugin.getInstance().getConfig().getString("usage_cmd", "%PREFIX% &fИспользование: /foredocuments <&egive&f/&etake&f/&eupdatedata&f> [&eдокумент&f] [&eигрок&f]")
+                        .replace("%PREFIX%", this.plugin.getInstance().getConfig().getString("prefix"))));
                 return true;
             }
 
-            Data data = plugin.getData();
+            Data data = this.plugin.getData();
+            String subCommand = args[0].toLowerCase();
 
-            if (args[0].equalsIgnoreCase("updatedata")) {
-                data.updateAllPlayers();
-                sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("updatedata_message", "%PREFIX% &aДанные обновлены!")
-                        .replace("%PREFIX%", plugin.getInstance().getConfig().getString("prefix"))));
-                return true;
-            }
-
-            if (args[0].equalsIgnoreCase("reload")) {
-                plugin.getInstance().reloadConfig();
-                if (plugin.getInstance().getConfig().getBoolean("reload_with_updatedata", false)) {
+            switch (subCommand) {
+                case "updatedata" -> {
                     data.updateAllPlayers();
+                    sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("updatedata_message", "%PREFIX% &aДанные обновлены!")
+                            .replace("%PREFIX%", prefix)));
+                    return true;
                 }
-                sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("reload_message", "%PREFIX% &aКонфигурация успешно перезагружена.")
-                        .replace("%PREFIX%", plugin.getInstance().getConfig().getString("prefix"))));
-                return true;
+                case "reload" -> {
+                    plugin.getInstance().reloadConfig();
+                    if (plugin.getInstance().getConfig().getBoolean("reload_with_updatedata", false)) {
+                        data.updateAllPlayers();
+                    }
+                    sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("reload_message", "%PREFIX% &aКонфигурация успешно перезагружена.")
+                            .replace("%PREFIX%", prefix)));
+                    return true;
+                }
+                case "give", "take" -> {
+                    if (args.length < 3) {
+                        sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("usage_cmd_length", "%PREFIX% &fИспользование: /foredocuments <&egive&f/&etake&f> <&eдокумент&f> <&eигрок&f>")
+                                .replace("%PREFIX%", prefix)));
+                        return true;
+                    }
+
+                    String document = args[1];
+                    Player target = Bukkit.getPlayer(args[2]);
+
+                    if (target == null) {
+                        sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("", "%PREFIX% &cИгрок не найден!")
+                                .replace("%PREFIX%", prefix)));
+                        return true;
+                    }
+
+                    if (!plugin.getConfig().getConfigurationSection("documents").contains(document)) {
+                        sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("document_not_found", "%PREFIX% &cДокумент &o&n%DOCUMENT%&r &cне найден в конфигурации!")
+                                .replace("%PREFIX%", prefix)
+                                .replace("%DOCUMENT%", document)));
+                        return true;
+                    }
+
+                    boolean give = subCommand.equals("give");
+                    data.setDocument(target, document, give);
+
+                    String commandToExecute = plugin.getConfig().getString("documents." + document + (give ? ".give_execute" : ".take_execute"));
+                    if (commandToExecute != null && !commandToExecute.isEmpty()) {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandToExecute.replace("%PLAYER%", target.getName()));
+                    }
+
+                    sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("document_message", "%PREFIX% &fДокумент &b%DOCUMENT% &r%STATUS% &fу игрока &2%PLAYER%")
+                                    .replace("%PREFIX%", prefix)
+                                    .replace("%DOCUMENT%", document)
+                                    .replace("%STATUS%", give ? this.plugin.getInstance().getConfig().getString("give_document", "&aвыдан") :
+                                            plugin.getInstance().getConfig().getString("withdrawn_document", "&cизъят"))
+                                    .replace("%PLAYER%", target.getName())));
+                    return true;
+                }
+                default -> {
+                    sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("usage_cmd", "%PREFIX% &fИспользование: /foredocuments <&egive&f/&etake&f/&eupdatedata&f> [&eдокумент&f] [&eигрок&f]")
+                            .replace("%PREFIX%", prefix)));
+                    return true;
+                }
             }
-
-            if (args.length < 3) {
-                sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("usage_cmd_length", "%PREFIX% &fИспользование: /foredocuments <&egive&f/&etake&f> <&eдокумент&f> <&eигрок&f>")
-                        .replace("%PREFIX%", plugin.getInstance().getConfig().getString("prefix"))));
-                return true;
-            }
-
-            String document = args[1];
-            Player target = Bukkit.getPlayer(args[2]);
-
-            if (target == null) {
-                sender.sendMessage(cr.color(plugin.getInstance().getConfig().getString("", "%PREFIX% &cИгрок не найден!")
-                        .replace("%PREFIX%", plugin.getInstance().getConfig().getString("prefix"))));
-                return true;
-            }
-
-            if (!plugin.getConfig().getConfigurationSection("documents").contains(document)) {
-                String document_not_found_message = plugin.getInstance().getConfig().getString("document_not_found", "%PREFIX% &cДокумент &o&n%DOCUMENT%&r &cне найден в конфигруации!")
-                        .replace("%PREFIX%", plugin.getInstance().getConfig().getString("prefix"))
-                        .replace("%DOCUMENT%", document);
-                sender.sendMessage(cr.color(document_not_found_message));
-                return true;
-            }
-
-            boolean give = args[0].equalsIgnoreCase("give");
-            data.setDocument(target, document, give);
-
-            String commandToExecute = plugin.getConfig().getString("documents." + document + (give ? ".give_execute" : ".take_execute"));
-            if (commandToExecute != null && !commandToExecute.isEmpty()) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandToExecute
-                        .replace("%PLAYER%", target.getName()));
-            }
-
-            String document_action_status = give ? plugin.getInstance().getConfig().getString("give_document", "&aвыдан")
-                    : plugin.getInstance().getConfig().getString("withdrawn_document", "&cизъят");
-
-            String document_action_message = plugin.getInstance().getConfig().getString("document_message", "%PREFIX% &fДокумент &b%DOCUMENT% &r%STATUS% &fу игрока &2%PLAYER%")
-                    .replace("%PREFIX%", plugin.getInstance().getConfig().getString("prefix"))
-                    .replace("%DOCUMENT%", document)
-                    .replace("%STATUS%", document_action_status)
-                    .replace("%PLAYER%", target.getName());
-
-            sender.sendMessage(cr.color(document_action_message));
-            return true;
         }
-
         return true;
     }
 

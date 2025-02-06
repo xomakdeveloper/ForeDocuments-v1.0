@@ -27,8 +27,6 @@ import java.io.IOException;
 public class ForeDocuments extends JavaPlugin {
     private static ForeDocuments instance;
     private Data data;
-    private File licenseFile;
-    private FileConfiguration licenseConfig;
     private ForeDocumentsPlaceholder placeholderExpansion;
 
     @Override
@@ -36,37 +34,16 @@ public class ForeDocuments extends JavaPlugin {
         instance = this;
         data = new Data(this);
         saveDefaultConfig();
-        saveDefaultLicense();
 
-        Bukkit.getLogger().info(cr.color("&2███████╗ ██████╗ ██████╗ ███████╗  ██████╗  ██████╗  ██████╗██╗   ██╗███╗   ███╗███████╗███╗   ██╗████████╗███████╗"));
-        Bukkit.getLogger().info(cr.color("&2██╔════╝██╔═══██╗██╔══██╗██╔════╝  ██╔══██╗██╔═══██╗██╔════╝██║   ██║████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔════╝"));
-        Bukkit.getLogger().info(cr.color("&2█████╗  ██║   ██║██████╔╝█████╗    ██║  ██║██║   ██║██║     ██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████╗"));
-        Bukkit.getLogger().info(cr.color("&2██╔══╝  ██║   ██║██╔══██╗██╔══╝    ██║  ██║██║   ██║██║     ██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ╚════██║"));
-        Bukkit.getLogger().info(cr.color("&2██║     ╚██████╔╝██║  ██║███████╗  ██████╔╝╚██████╔╝╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ███████║"));
-        Bukkit.getLogger().info(cr.color("&2╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝"));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color("&2Fore Documents &7& &2v" + getDescription().getVersion()));
-        Bukkit.getLogger().info(cr.color("&fCreated by xomakdev.exe ( xomakdeveloper ) with &clove"));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color("&fStatus: &aEnabled"));
-        Bukkit.getLogger().info(cr.color("&fSupport? - &9Discord: xomakdeveloperr &7& &bTelegram: @kofead"));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" Copyright (c) 2025 &cXomakDeveloper."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" This software is released under the AGPLv3 License with an additional non-commercial clause."));
-        Bukkit.getLogger().info(cr.color(" You are free to use, modify, and distribute it as long as it is not for commercial purposes."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" See the LICENSE file for more details on the AGPLv3 and the additional clause."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" ------------------------------------------------------------------"));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" Авторские права (c) 2025 &cXomakDeveloper."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" Это программное обеспечение распространяется под лицензией AGPLv3 с дополнительным условием о запрете коммерческого использования."));
-        Bukkit.getLogger().info(cr.color(" Вы можете свободно использовать, изменять и распространять его, при условии, что это не будет происходить в коммерческих целях."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" Подробнее читайте в файле LICENSE об условиях AGPLv3 и дополнительном условии."));
-        Bukkit.getLogger().info(cr.color(" "));
+        Bukkit.getLogger().info(cr.color(" &2███████╗ ██████╗ ██████╗ ███████╗  ██████╗  ██████╗  ██████╗██╗   ██╗███╗   ███╗███████╗███╗   ██╗████████╗███████╗"));
+        Bukkit.getLogger().info(cr.color(" &2██╔════╝██╔═══██╗██╔══██╗██╔════╝  ██╔══██╗██╔═══██╗██╔════╝██║   ██║████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔════╝"));
+        Bukkit.getLogger().info(cr.color(" &2█████╗  ██║   ██║██████╔╝█████╗    ██║  ██║██║   ██║██║     ██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████╗"));
+        Bukkit.getLogger().info(cr.color(" &2██╔══╝  ██║   ██║██╔══██╗██╔══╝    ██║  ██║██║   ██║██║     ██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ╚════██║"));
+        Bukkit.getLogger().info(cr.color(" &2██║     ╚██████╔╝██║  ██║███████╗  ██████╔╝╚██████╔╝╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ███████║"));
+        Bukkit.getLogger().info(cr.color(" &2╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝"));
+        Bukkit.getLogger().info(cr.color(" &2Fore Documents &7& &2v" + getDescription().getVersion() + " &fby xomakdev.exe"));
+        //Bukkit.getLogger().info(cr.color(" &fStatus: &aEnabled"));
+        Bukkit.getLogger().info(cr.color(" &fSupport? - &9Discord: xomakdeveloperr &7& &bTelegram: @kofead"));
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
             Bukkit.getLogger().severe(cr.color("&7[&c-&7]&cPlaceholderAPI не найден! Плагин выключается..."));
@@ -84,49 +61,20 @@ public class ForeDocuments extends JavaPlugin {
     @Override
     public void onDisable() {
 
-
-        Bukkit.getLogger().info(cr.color("&2███████╗ ██████╗ ██████╗ ███████╗  ██████╗  ██████╗  ██████╗██╗   ██╗███╗   ███╗███████╗███╗   ██╗████████╗███████╗"));
-        Bukkit.getLogger().info(cr.color("&2██╔════╝██╔═══██╗██╔══██╗██╔════╝  ██╔══██╗██╔═══██╗██╔════╝██║   ██║████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔════╝"));
-        Bukkit.getLogger().info(cr.color("&2█████╗  ██║   ██║██████╔╝█████╗    ██║  ██║██║   ██║██║     ██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████╗"));
-        Bukkit.getLogger().info(cr.color("&2██╔══╝  ██║   ██║██╔══██╗██╔══╝    ██║  ██║██║   ██║██║     ██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ╚════██║"));
-        Bukkit.getLogger().info(cr.color("&2██║     ╚██████╔╝██║  ██║███████╗  ██████╔╝╚██████╔╝╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ███████║"));
-        Bukkit.getLogger().info(cr.color("&2╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝"));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color("&2Fore Documents &7& &2v" + getDescription().getVersion()));
-        Bukkit.getLogger().info(cr.color("&fCreated by xomakdev.exe ( xomakdeveloper ) with &clove"));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color("&fStatus: &4Disabled"));
-        Bukkit.getLogger().info(cr.color("&fSupport? - &9Discord: xomakdeveloperr &7& &bTelegram: @kofead"));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" Copyright (c) 2025 &cXomakDeveloper."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" This software is released under the AGPLv3 License with an additional non-commercial clause."));
-        Bukkit.getLogger().info(cr.color(" You are free to use, modify, and distribute it as long as it is not for commercial purposes."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" See the LICENSE file for more details on the AGPLv3 and the additional clause."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" ------------------------------------------------------------------"));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" Авторские права (c) 2025 &cXomakDeveloper."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" Это программное обеспечение распространяется под лицензией AGPLv3 с дополнительным условием о запрете коммерческого использования."));
-        Bukkit.getLogger().info(cr.color(" Вы можете свободно использовать, изменять и распространять его, при условии, что это не будет происходить в коммерческих целях."));
-        Bukkit.getLogger().info(cr.color(" "));
-        Bukkit.getLogger().info(cr.color(" Подробнее читайте в файле LICENSE об условиях AGPLv3 и дополнительном условии."));
-        Bukkit.getLogger().info(cr.color(" "));
+        Bukkit.getLogger().info(cr.color(" &2███████╗ ██████╗ ██████╗ ███████╗  ██████╗  ██████╗  ██████╗██╗   ██╗███╗   ███╗███████╗███╗   ██╗████████╗███████╗"));
+        Bukkit.getLogger().info(cr.color(" &2██╔════╝██╔═══██╗██╔══██╗██╔════╝  ██╔══██╗██╔═══██╗██╔════╝██║   ██║████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔════╝"));
+        Bukkit.getLogger().info(cr.color(" &2█████╗  ██║   ██║██████╔╝█████╗    ██║  ██║██║   ██║██║     ██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████╗"));
+        Bukkit.getLogger().info(cr.color(" &2██╔══╝  ██║   ██║██╔══██╗██╔══╝    ██║  ██║██║   ██║██║     ██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ╚════██║"));
+        Bukkit.getLogger().info(cr.color(" &2██║     ╚██████╔╝██║  ██║███████╗  ██████╔╝╚██████╔╝╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ███████║"));
+        Bukkit.getLogger().info(cr.color(" &2╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝"));
+        Bukkit.getLogger().info(cr.color(" &2Fore Documents &7& &2v" + getDescription().getVersion() + " &fby xomakdev.exe"));
+        //Bukkit.getLogger().info(cr.color(" &fStatus: &4Disabled"));
+        Bukkit.getLogger().info(cr.color(" &fSupport? - &9Discord: xomakdeveloperr &7& &bTelegram: @kofead"));
 
         if (placeholderExpansion != null) {
             placeholderExpansion.unregister();
         }
         data.saveData();
-    }
-
-    private void saveDefaultLicense() {
-        licenseFile = new File(getDataFolder(), "LICENSE");
-        if (!licenseFile.exists()) {
-            saveResource("LICENSE", false);
-        }
-        licenseConfig = YamlConfiguration.loadConfiguration(licenseFile);
     }
 
     public ForeDocuments getInstance() {

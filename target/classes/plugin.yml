@@ -1,5 +1,5 @@
 name: ForeDocuments
-version: '1.0'
+version: '1.0F'
 main: org.xomakdev.foredocuments.ForeDocuments
 api-version: '1.16'
 prefix: FOREDOCUMENTS
